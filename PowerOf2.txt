@@ -1,0 +1,28 @@
+//C# power of 2
+
+/**/
+
+public class Solution {
+    
+    public bool HasOneBit(int n){
+        int counter = 0;
+        
+        while (n != 0){
+            if ((n&1) == 1){
+                counter++;
+                
+                if (counter > 1){
+                    return false;
+                }
+            }
+            
+            n = n>>1;
+        }
+        return true;
+    }
+    
+    
+    public bool IsPowerOfTwo(int n) {
+        return ((n > 0) && (HasOneBit(n)));
+    }
+}

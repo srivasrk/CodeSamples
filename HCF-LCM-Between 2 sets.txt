@@ -1,0 +1,98 @@
+//C# HCF LCM Between 2 sets
+
+/*
+Consider two sets of positive integers,  and . We say that a positive integer, , is between sets  and  if the following conditions are satisfied:
+
+All elements in  are factors of .
+ is a factor of all elements in .
+Given  and , find and print the number of integers (i.e., possible 's) that are between the two sets.
+
+Input Format
+
+The first line contains two space-separated integers describing the respective values of  (the number of elements in set ) and  (the number of elements in set ). 
+The second line contains  distinct space-separated integers describing . 
+The third line contains  distinct space-separated integers describing .
+
+Constraints
+
+Output Format
+
+Print the number of integers that are considered to be between  and .
+
+Sample Input
+
+2 3
+2 4
+16 32 96
+Sample Output
+
+3
+Explanation
+
+The integers that are between  and  are , , and .
+*/
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+class Solution {
+    
+    
+    static int HCF(int num1, int num2){
+        int temp;
+        while (num2 > 0){
+            temp = num2;
+            num2 = num1 % num2;
+            num1 = temp;            
+        }
+        return num1;
+    }
+    
+    static int HCF(int[] nums) {
+        int result = nums[0];
+        
+        for (int index = 0; index < nums.Length; index++){
+            result = HCF(result, nums[index]);
+        }
+        
+        return result;
+    }
+    
+    static int LCM(int num1, int num2){
+        return (num1 * (num2 / HCF(num1, num2)));
+    }
+
+    static int LCM(int[] nums){
+        int result = nums[0];
+        for (int index=1; index<nums.Length; index++){
+            result = LCM(result, nums[index]);
+        }
+        
+        return result;
+    }
+    
+    static void Main(String[] args) {
+        string[] tokens_n = Console.ReadLine().Split(' ');
+        int n = Convert.ToInt32(tokens_n[0]);
+        int m = Convert.ToInt32(tokens_n[1]);
+        string[] a_temp = Console.ReadLine().Split(' ');
+        int[] a = Array.ConvertAll(a_temp,Int32.Parse);
+        string[] b_temp = Console.ReadLine().Split(' ');
+        int[] b = Array.ConvertAll(b_temp,Int32.Parse);
+        
+        int lcm = LCM(a);
+        int hcf = HCF(b);
+        int count = 0;
+        int index, index2;
+        
+        for (index = lcm, index2 = 2; index <= hcf; index=lcm*index2, index2++){
+            if (hcf % index == 0) {
+                count++;
+            }
+        }
+        
+        Console.WriteLine(count);
+        
+    }
+}

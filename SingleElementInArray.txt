@@ -1,0 +1,36 @@
+//C# Single Element in Array
+
+public class Solution {
+    
+    public int FindSingleElement(int[] nums, int start, int end){
+        
+        if (start < end){
+            int middle = (end + start)/2;
+            
+            if (middle % 2 == 0){
+                if (nums[middle] == nums[middle+1]){
+                    return FindSingleElement(nums, middle+2, end);
+                } else if (nums[middle] == nums[middle-1]){
+                    return FindSingleElement(nums, start, middle - 1);
+                } else {
+                    return nums[middle];
+                }
+                
+            } else {
+                if (nums[middle-1] == nums[middle]){
+                    return FindSingleElement(nums, middle+1, end);
+                } else {
+                    return FindSingleElement(nums, start, middle - 1);
+                }
+            }
+            
+        }
+        return nums[start];
+        
+    }
+    
+    public int SingleNonDuplicate(int[] nums) {
+        return FindSingleElement(nums, 0, nums.Length-1);
+        
+    }
+}

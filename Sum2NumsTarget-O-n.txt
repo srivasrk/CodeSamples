@@ -1,0 +1,26 @@
+//C# find first two nums who sum is target in O(n)
+
+public class Solution {
+    public int[] TwoSum(int[] nums, int target) {
+        
+        Dictionary<int, int> numDictionary = new Dictionary<int, int>();
+        int a, numberToFind;
+        int[] result = new int[2];
+        
+        for (int index = 0; index < nums.Length; index++){
+            a = nums[index];
+            numberToFind = target - a;
+        
+            if (numDictionary.ContainsValue(numberToFind)){
+                result[1] = index;
+                result[0] = numDictionary.FirstOrDefault(x => x.Value == numberToFind).Key;
+                return result;
+            } else {
+                numDictionary.Add(index, a);
+            }
+        }
+        
+        return result;
+        
+    }
+}

@@ -1,0 +1,96 @@
+//C# connected cell DFS
+/*
+Consider a matrix with  rows and  columns, where each cell contains either a  or a  and any cell containing a is called a filled cell. Two cells are said to be connected if they are adjacent to each other horizontally, vertically, or diagonally; in other words, cell  is connected to cells , , , , , , , and , provided that the location exists in the matrix for that .
+
+If one or more filled cells are also connected, they form a region. Note that each cell in a region is connected to at least one other cell in the region but is not necessarily directly connected to all the other cells in the region.
+
+Task 
+Given an  matrix, find and print the number of cells in the largest region in the matrix. Note that there may be more than one region in the matrix.
+
+Input Format
+
+The first line contains an integer, , denoting the number of rows in the matrix. 
+The second line contains an integer, , denoting the number of columns in the matrix. 
+Each line  of the  subsequent lines contains  space-separated integers describing the respective values filling each row in the matrix.
+
+Constraints
+
+Output Format
+
+Print the number of cells in the largest region in the given matrix.
+
+Sample Input
+
+4
+4
+1 1 0 0
+0 1 1 0
+0 0 1 0
+1 0 0 0
+Sample Output
+
+5
+Explanation
+
+The diagram below depicts two regions of the matrix; for each region, the component cells forming the region are marked with an X:
+
+X X 0 0     1 1 0 0
+0 X X 0     0 1 1 0
+0 0 X 0     0 0 1 0
+1 0 0 0     X 0 0 0
+The first region has five cells and the second region has one cell. Because we want to print the number of cells in the largest region of the matrix, we print .
+*/
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+class Solution {
+
+    static int getRegionSize(int[][] grid, int row, int col, int rowSize, int colSize){
+        if ((row >= 0) && (row < rowSize) && (col >= 0) && (col < colSize)) {
+            if (1 == grid[row][col]) {
+                grid[row][col] = -1;
+                return (((getRegionSize(grid, row-1, col, rowSize, colSize)) +
+                       (getRegionSize(grid, row+1, col, rowSize, colSize)) +
+                       (getRegionSize(grid, row, col+1, rowSize, colSize)) +
+                       (getRegionSize(grid, row, col-1, rowSize, colSize)) +                          
+                       (getRegionSize(grid, row-1, col-1, rowSize, colSize)) + 
+                       (getRegionSize(grid, row+1, col+1, rowSize, colSize)) + 
+                       (getRegionSize(grid, row+1, col-1, rowSize, colSize)) + 
+                       (getRegionSize(grid, row-1, col+1, rowSize, colSize))  ) + 1);
+            }
+            else {
+                return 0;
+            }
+        }
+        else {         
+            return 0;   
+        }
+    }
+    
+    static void Main(String[] args) {
+        int n = Convert.ToInt32(Console.ReadLine());
+        int m = Convert.ToInt32(Console.ReadLine());
+        int[][] grid = new int[n][];
+        for(int grid_i = 0; grid_i < n; grid_i++){
+           string[] grid_temp = Console.ReadLine().Split(' ');
+           grid[grid_i] = Array.ConvertAll(grid_temp,Int32.Parse);
+        }
+        
+        int maxRegion = 0;
+        int tempValue = -1;
+        
+        for (int a0=0; a0 < n; a0++){
+            for (int a1=0; a1 < m; a1++){
+                tempValue = getRegionSize(grid, a0, a1, n, m);
+                if (maxRegion < tempValue){
+                    maxRegion = tempValue;
+                }
+                tempValue = -1;           
+            }
+        }
+        Console.WriteLine(maxRegion); 
+        
+    }
+}

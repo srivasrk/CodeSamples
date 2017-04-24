@@ -1,0 +1,60 @@
+//C# Queue using 2 stacks
+
+public class MyQueue {
+    
+    List<int> inbox;
+    List<int> outbox;
+
+    /** Initialize your data structure here. */
+    public MyQueue() {
+        inbox = new List<int>();
+        outbox = new List<int>();
+        
+    }
+    
+    /** Push element x to the back of queue. */
+    public void Push(int x) {
+        inbox.Add(x);
+        
+    }
+    
+    /** Removes the element from in front of queue and returns that element. */
+    public int Pop() {
+        if (outbox.Count == 0){
+            while (inbox.Count > 0){
+                outbox.Add(inbox[inbox.Count - 1]);
+                inbox.RemoveAt(inbox.Count - 1);
+            }
+        }
+        int res = outbox[outbox.Count - 1];
+        outbox.RemoveAt(outbox.Count - 1);
+        return res;
+    }
+    
+    /** Get the front element. */
+    public int Peek() {
+        if (outbox.Count == 0){
+            while (inbox.Count > 0){
+                outbox.Add(inbox[inbox.Count - 1]);
+                inbox.RemoveAt(inbox.Count - 1);
+            }
+        }
+        return outbox[outbox.Count - 1];
+        
+    }
+    
+    /** Returns whether the queue is empty. */
+    public bool Empty() {
+        return ((inbox.Count == 0) && (outbox.Count == 0));
+        
+    }
+}
+
+/**
+ * Your MyQueue object will be instantiated and called as such:
+ * MyQueue obj = new MyQueue();
+ * obj.Push(x);
+ * int param_2 = obj.Pop();
+ * int param_3 = obj.Peek();
+ * bool param_4 = obj.Empty();
+ */

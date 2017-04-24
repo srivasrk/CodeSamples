@@ -1,0 +1,49 @@
+//C# search for a range
+
+/*
+Given an array of integers sorted in ascending order, find the starting and ending position of a given target value.
+
+Your algorithm's runtime complexity must be in the order of O(log n).
+
+If the target is not found in the array, return [-1, -1].
+
+For example,
+Given [5, 7, 7, 8, 8, 10] and target value 8,
+return [3, 4].
+*/
+
+public class Solution {
+    public int[] SearchRange(int[] nums, int target) {
+        int start = 0;
+        int end = nums.Length-1;
+        
+        int mid = 0;
+        bool startFound = false;
+        bool endFound = false;
+        
+        while (start <= end){
+            if (nums[start] == target){
+                startFound = true;
+            } else if (nums[start] < target){
+                start++;
+            }
+            
+            if (nums[end] == target){
+                endFound = true;
+            } else if (nums[end] > target){
+                end--;
+            }
+            
+            if (startFound && endFound){
+                break;
+            }
+        }
+        
+        if (!(startFound && endFound)){
+            start = -1;
+            end = -1;
+        }
+        
+        return (new int[2] {start, end});
+    }
+}

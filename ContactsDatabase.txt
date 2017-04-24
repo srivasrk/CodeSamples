@@ -1,0 +1,48 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+
+class WordListTreeNode {
+    char * data;
+    List<WordListTreeNode *> WordLinks;
+    int numberOfLinks;
+    
+    public WordListTree(char aChar) {
+        WordLinks = new List<WordListTreeNode *>();
+        numberOfLinks = 0;
+        data = aChar;
+    }
+    
+    public void Add(WordListTreeNode * aWordListTreeNode){
+        WordLinks.Add(WordListTreeNode);
+        numberOfLinks++;
+    }
+}
+
+class Solution {
+    
+    static void AddToTree(WordListTreeNode * root, node) {
+        
+    }
+    
+    static void Main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
+        
+        int numberOfInputs = Convert.ToInt32(Console.ReadLine());
+        
+        WordListTreeNode * root
+        
+        for (int index = 0; index < numberOfInputs; index++){
+            string commandString = Console.ReadLine();
+            
+            string[] commandPieces = commandString.Split(' ');
+            
+            if (commandPieces[0] == "add"){
+                //addToTree(commandPieces)
+            }
+            else if (commandPieces[0] == "find"){}
+                
+                
+        }
+    }
+}

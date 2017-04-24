@@ -1,0 +1,40 @@
+//C# running median
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
+namespace Solution {
+class Solution {
+    static void Main(string[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT */
+        
+        int numInputs = Convert.ToInt32(Console.ReadLine());
+        List<int> listOfNumbers= new List<int>();
+        float median = 0;
+        int position;
+        int numberToInsert;
+        
+        
+        for (int index = 1; index <= numInputs; index++){
+            numberToInsert = Convert.ToInt32(Console.ReadLine());
+                        
+            position = listOfNumbers.BinarySearch(numberToInsert);
+            if (position < 0){
+                position = ~position;
+            }
+            listOfNumbers.Insert(position, numberToInsert);
+            
+            if (index % 2 == 0) {
+                median = (float)(listOfNumbers[listOfNumbers.Count/2] + (listOfNumbers[(listOfNumbers.Count/2) - 1]))/2;
+                
+            } else {
+                median = (float)(listOfNumbers[(listOfNumbers.Count/2)]);
+            }
+            
+            Console.WriteLine(median.ToString("0.0"));
+        }
+    }
+}
+}

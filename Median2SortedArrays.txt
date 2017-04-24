@@ -1,0 +1,63 @@
+//C# median of 2 sorted arrays
+
+public class Solution {
+    
+    public int[] MergeSortedArrays(int[] nums1, int[] nums2){
+        int size = nums1.Length + nums2.Length;
+        int[] nums = new int[size];
+        
+        int index1 = 0;
+        int index2 = 0;
+        int index = 0;
+        
+        while ((index1 < nums1.Length) && (index2 < nums2.Length) ){
+            if (nums1[index1] < nums2[index2]) {
+                //Console.WriteLine("1. Copied {0} in the merged array at posn {1}", nums1[index1], index);
+                nums[index++] = nums1[index1++];
+                
+            } else {
+                //Console.WriteLine("2. Copied {0} in the merged array at posn {1}", nums2[index2], index);
+                nums[index++] = nums2[index2++];
+            }
+        }
+        
+        for (; index1 < nums1.Length; index1++){
+            //Console.WriteLine("3. Copied {0} in the merged array at posn {1}", nums1[index1], index);
+            nums[index] = nums1[index1];
+            index++;
+        }
+        
+        for (; index2 < nums2.Length; index2++){
+            //Console.WriteLine("4. Copied {0} in the merged array at posn {1}", nums2[index2], index);
+            nums[index] = nums2[index2];
+            index++;
+        }
+        
+        return nums;
+    }
+    
+    public double FindMedianSortedArrays(int[] nums1, int[] nums2) {
+        
+        int[] nums = MergeSortedArrays(nums1, nums2);
+        double median = -1;
+        int middle = 0;
+        
+        if (nums.Length > 0){
+            if (nums.Length % 2 == 0){
+                middle = nums.Length/2;
+                median = (double) ((nums[middle] + nums[middle-1]))/2;
+            } else {
+                median = nums[nums.Length/2];
+            }
+        } else {
+            median = -1;
+        }
+        
+        for (int index = 0; index < nums.Length; index++){
+            Console.WriteLine(nums[index]);
+        }
+        
+        return median;
+        
+    }
+}
