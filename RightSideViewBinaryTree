@@ -1,0 +1,52 @@
+//C# code Right side view of a Binary Tree
+/*
+Given a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.
+
+For example:
+Given the following binary tree,
+   1            <---
+ /   \
+2     3         <---
+ \     \
+  5     4       <---
+You should return [1, 3, 4].
+
+*/
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    
+    
+    public void GetRightSideView(TreeNode root, IList<int> view, int level){
+        
+        if (root == null){
+            return;
+        } 
+        
+        if (level == view.Count)
+        {
+            view.Add(root.val);
+        }
+        
+        GetRightSideView(root.right, view, level+1);
+        GetRightSideView(root.left, view, level+1);
+        
+        
+    }
+    
+    public IList<int> RightSideView(TreeNode root) {
+        
+        List<int> view = new List<int>();
+        GetRightSideView(root, view, 0);
+        return view;
+        
+    }
+}
