@@ -1,0 +1,40 @@
+//C# Count prime numbers
+
+/*
+Count the number of prime numbers less than a non-negative number, n.
+*/
+
+public class Solution {
+    public int CountPrimes(int n) {
+    	if (n <= 2){
+    		return 0;
+    	}
+     
+    	//array for prime numbers
+    	bool[] primes = new bool[n];
+    	for (int i = 2; i < n; i++){
+    		primes[i] = true; //init all nums as prime nums
+    	}
+     
+    	for (int i = 2; i <= Math.Sqrt(n - 1); i++) {
+    	// or for (int i = 2; i <= n-1; i++) {
+    		if (primes[i]) {
+    		    //j is incremented as 2i, 3i, 4i, 5i... i can be 2,3,4,5...
+    		    //all the nums which are divisible by i (or equal to 2i, 3i, 4i ie j) are not prime
+    			for (int j = i + i; j < n; j += i){
+    				primes[j] = false;// this j is equal to 2i or 3i or 4i, so can be prime
+    			}
+    		}
+    	}
+    	
+    	//only those nums will be left as prime=true which were not divisible by 2i, 3i, 4i...
+     
+    	int count = 0;
+    	for (int i = 2; i < n; i++) {
+    		if (primes[i])
+    			count++;
+    	}
+     
+    	return count;
+    }
+}
