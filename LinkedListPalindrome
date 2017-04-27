@@ -1,0 +1,95 @@
+//C# Linked List Palindrome
+/*
+Given a singly linked list, determine if it is a palindrome.
+
+Inputs: 
+[1,2,3,4,5]
+[]
+[1]
+[1,2]
+[1,1]
+[1,2,2,1]
+[1,2,3,2,1]
+
+Outputs:
+false
+true
+true
+false
+true
+true
+true
+*/
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    
+    public ListNode ReverseList(ListNode head){
+        ListNode curr = head;
+        ListNode next = null;
+        ListNode prev = null;
+        
+        while (curr != null){
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        
+        head = prev;
+        return head;
+    }
+    
+    
+    public bool IsPalindrome(ListNode head) {
+        
+        //Step 1. Check for base case for inputs with 0 or 1 node
+        if ((head == null) || (head.next == null)){
+            return true;
+        }
+        
+        //Step 2. Find the middle node using fast and slow runner.
+        ListNode p = head;
+        ListNode q = head;
+        ListNode r = null;
+        
+        while ((p != null) && (p.next != null)){
+            p = p.next.next;
+            r = q;
+            q = q.next;
+        }
+
+        //Step 3. q points at the middle node in the list. We will reverse the second half.
+        r.next = ReverseList(q);
+        
+        //Step 4. Attach the reversed second-half of linked list at the end of first-half.
+        r = r.next;
+        
+        
+        //Step 5. Keep a reference to the head of 2nd half of the string. This will be used to
+        //end the comparison. We want to compare only till half of the linked list. 
+        q = r;
+        p = head;// Start comparing from the beginning of the list
+        
+       
+        //Step 6. Compare the two halves of the linked list.  
+        while (p != q){
+            Console.WriteLine("Comparing p:{0}, and r:{1}", p.val, r.val);
+            if (p.val != r.val){
+                return false;
+            }
+            p = p.next;
+            r = r.next;
+        }
+    
+        return true;
+        
+    }
+}
