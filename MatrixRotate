@@ -1,0 +1,32 @@
+//C# Matrix rotate
+
+/*
+You are given an n x n 2D matrix representing an image.
+
+Rotate the image by 90 degrees (clockwise).
+*/
+
+public class Solution {
+    public void Rotate(int[,] matrix) {
+        //.Rank for the number of dimensions. 
+        //.GetLength(0) for the number of rows, 
+        //.GetLength(1) for the number of columns.
+        
+        int size = matrix.GetLength(0);//square matrix so len == width
+        
+        int[,] newmat = new int[size,size];
+        
+        for (int row = 0; row < size; row++){
+            for (int col = 0; col < size; col++){
+                newmat[col, size-row-1] = matrix[row, col];
+            }
+        }
+        
+        for (int row = 0; row < size; row++){
+            for (int col = 0; col < size; col++){
+                matrix[row, col] = newmat[row, col];
+            }
+        }
+        
+    }
+}
