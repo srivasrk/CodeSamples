@@ -1,0 +1,29 @@
+//C# Inorder successor in BST
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public TreeNode InorderSuccessor(TreeNode root, TreeNode p) {
+        if (root == null){
+            return null;
+        }
+        
+        if (root.val <= p.val){
+            return InorderSuccessor(root.right, p);
+        } else {
+            TreeNode s = InorderSuccessor(root.left, p);
+            
+            if (s == null){
+                return root;
+            } else {
+                return s;
+            }
+        }
+    }
+}
