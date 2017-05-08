@@ -1,0 +1,91 @@
+//C# Coin Change another solution with explanation
+//Reference: https://www.youtube.com/watch?v=sn0DWI-JdNA
+/*
+You are given coins of different denominations and a total amount of money. Write a function to compute the number of combinations that make up that amount. You may assume that you have infinite number of each kind of coin.
+
+Note: You can assume that
+
+0 <= amount <= 5000
+1 <= coin <= 5000
+the number of coins is less than 500
+the answer is guaranteed to fit into signed 32-bit integer
+Example 1:
+
+Input: amount = 5, coins = [1, 2, 5]
+Output: 4
+Explanation: there are four ways to make up the amount:
+5=5
+5=2+2+1
+5=2+1+1+1
+5=1+1+1+1+1
+Example 2:
+
+Input: amount = 3, coins = [2]
+Output: 0
+Explanation: the amount of 3 cannot be made up just with coins of 2.
+Example 3:
+
+Input: amount = 10, coins = [10] 
+Output: 1
+*/
+
+/*****************************
+Explanation:
+Amount: 27
+Coins: [25, 10, 5, 1]
+
+MakeChange(27, {25,10,5,1})
+| | with 0 quarters
+| |--->MakeChange(27, {10,5,1}) 
+|     | with 0 dimes
+|     |---> MakeChange(27, {5,1})
+|     | with 1 dime
+|     |---> MakeChange(17, {5,1})
+|     | with 2 dimes
+|     |---> MakeChange(7, {5,1})
+| | with 1 quarter
+| |--->MakeChange(2, {10,5,1})
+
+What are the ways to make 27 cents with 25,10,5,1 coins?
+we can use 0 OR 1 quarters (check remaining amount to decide 0,1,2...)
+now, with 0 quarters, the remaining amount is 27 cents. 
+how many ways to create 27 cents with 10,5,1 (since 0 quarters)
+now, with 1 quarter, the remaining amount is 2 cents.
+how many ways to create 2 cents with 10,5,1
+
+***************************/
+public class Solution {
+    
+    public int MakeChange(int[] coins, int amount, int index, Dictionary<string, int> memo){
+        
+        if (amount == 0){
+            return 1;
+        }
+        
+        if (coins.Length <= index){
+            return 0;
+        }
+        
+        string key = amount + "-" + index;
+        
+        if (memo.ContainsKey(key)){
+            return memo[key];
+        }
+        
+        int amountMadeWithCurrentCoin = 0;//amount made with the coin at current index
+        int ways = 0;
+        
+        while (amountMadeWithCurrentCoin <= amount){
+            int remaining = amount - amountMadeWithCurrentCoin;
+            ways = ways + MakeChange(coins, remaining, index + 1, memo);
+            amountMadeWithCurrentCoin = amountMadeWithCurrentCoin + coins[index];
+        }
+        memo.Add(key, ways);
+        return ways;
+        
+    }
+    
+    public int Change(int amount, int[] coins) {
+        return MakeChange(coins, amount, 0, new Dictionary<string, int>());
+    }
+}
