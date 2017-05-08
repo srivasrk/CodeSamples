@@ -1,0 +1,39 @@
+//C# SetMatrixZeroes
+/*
+Given a m x n matrix, if an element is 0, set its entire row and column to 0. Do it in place.
+*/
+
+public class Solution {
+    public void SetZeroes(int[,] matrix) {
+        
+        int rows = matrix.GetLength(0);
+        int cols = matrix.GetLength(1);
+        
+        List<int> rowList = new List<int>();
+        List<int> colList = new List<int>();
+        
+        for (int col = 0; col < cols; col++){
+            for (int row = 0; row < rows; row++){
+                if (matrix[row, col] == 0){
+                    rowList.Add(row);
+                    colList.Add(col);
+                    // Console.WriteLine("row:{0}, col:{1}", row, col);
+                }
+            }
+        }
+        
+        for (int index = 0; index < rowList.Count; index++){
+            for (int col = 0; col < cols; col++){
+                // Console.WriteLine("Set to 0: rowList[index]:{0}, col:{1}", rowList[index], col);
+                matrix[rowList[index], col] = 0;
+            }
+        }
+        
+        for (int index = 0; index < colList.Count; index++){
+            for (int row = 0; row < rows; row++){
+                matrix[row, colList[index]] = 0;
+            }
+        }
+        
+    }
+}
