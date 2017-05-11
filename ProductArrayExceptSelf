@@ -1,0 +1,41 @@
+//C# Product Array except self.
+/*
+Given an array of n integers where n > 1, nums, return an array output such that output[i] is equal to the product of all the elements of nums except nums[i].
+
+Solve it without division and in O(n).
+
+For example, given [1,2,3,4], return [24,12,8,6].
+*/
+
+public class Solution {
+    public int[] ProductExceptSelf(int[] nums) {
+        
+        //explanation:
+        // Input: {2, 3, 5, 7, 10}
+        
+        // step 1: res => {1, 2*1, 3*2*1, 5*3*2*1, 7*5*3*2*1}
+        
+        // step 2: similarly, multiple the product starting from right in nums[] array
+        //         'right' will keep the product of right elements. init right=1, coz last element in res is already done
+        //         right = 1, right = 1*nums[4], right = 1*nums[4]*nums[3]... 1*nums[4]*nums[3]*nums[2]*nums[1]*nums[0]
+        //         multiply the right each time with res array obtained in step 1.
+        
+        int size = nums.Length;
+        
+        int[] res = new int[size];
+        res[0] = 1;
+        
+        for (int i = 1; i < size; i++){
+            res[i] = res[i-1] * nums[i-1];
+        }
+        
+        int right = 1;
+        for (int i = size-1; i >= 0; i--){
+            res[i] = res[i] * right;
+            right = nums[i] * right;
+        }
+        
+        return res;
+        
+    }
+}
