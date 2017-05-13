@@ -1,0 +1,65 @@
+//C# Array Merge Sort
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+class Solution {
+    
+    static void Merge(int[] nums, int start, int mid, int end){
+        
+        int leftsize = mid-start+1;
+        int rightsize = end-mid;
+        int[] left = new int[leftsize];
+        int[] right = new int[rightsize];
+        
+        for (int index = 0; index < leftsize; index++){
+            left[index] = nums[start+index];
+        }
+        for (int index = 0; index < rightsize; index++){
+            right[index] = nums[mid+1+index];
+        }
+        
+        int i = 0;
+        int j = 0;
+        int n = start;        
+        
+        while ((i < leftsize) && (j < rightsize)){
+            if (left[i] < right[j]){
+                nums[n++] = left[i++];
+            } else {
+                nums[n++] = right[j++];
+            }
+        }
+        
+         while (i < leftsize){
+             nums[n++] = left[i++];           
+        }
+         while (j < rightsize){
+            nums[n++] = right[j++];            
+        }
+    }
+           
+    static void MergeSort(int[] nums, int start, int end){
+        if (start >= end){
+            return;
+        }        
+        int mid = (start + (end - start)/2);
+        
+        MergeSort(nums, start, mid);
+        MergeSort(nums, mid+1, end);
+        
+        Merge(nums, start, mid, end);
+    }
+    
+    static void Main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
+        
+        int size = Convert.ToInt32(Console.ReadLine());
+        int[] nums = Array.ConvertAll(Console.ReadLine().Split(), Int32.Parse);
+        
+        MergeSort(nums, 0, size-1);                              
+        string result = string.Join(",", nums);        
+        Console.Write("[" + result + "]");
+          
+    }
+}
