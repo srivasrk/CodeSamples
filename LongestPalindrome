@@ -1,0 +1,51 @@
+//C# LOngest Palindrome
+
+/*
+Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.
+
+Example:
+
+Input: "babad"
+
+Output: "bab"
+
+Note: "aba" is also a valid answer.
+Example:
+
+Input: "cbbd"
+
+Output: "bb"
+*/
+
+public class Solution {
+    
+    private int start = 0;
+    private int size = 0;
+    
+    public string LongestPalindrome(string s) {
+        int len = s.Length;
+        
+        if (len < 2){
+            return s;
+        }
+        
+        for (int index = 0; index < len; index++){
+            SetIndexAndSize(s, index, index);//for odd length
+            SetIndexAndSize(s, index, index+1);//for even length
+        }
+        
+        return s.Substring(start, size);
+    }
+    
+    private void SetIndexAndSize(string s, int left, int right){
+        while ((left >= 0) && (right < s.Length) && s[left] == s[right]){
+            left--;
+            right++;
+        }
+        
+        if (size < (right - left - 1)){
+            size = right - left - 1; 
+            start = left + 1;
+        }
+    }
+}
