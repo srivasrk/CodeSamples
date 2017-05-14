@@ -1,0 +1,42 @@
+//C# Isomorphic Strings
+
+/*
+Given two strings s and t, determine if they are isomorphic.
+
+Two strings are isomorphic if the characters in s can be replaced to get t.
+
+All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character but a character may map to itself.
+
+For example,
+
+Given "aba", "baa", return false.
+
+Given "egg", "add", return true.
+
+Given "foo", "bar", return false.
+
+Given "paper", "title", return true.
+*/
+
+public class Solution {
+    public bool IsIsomorphic(string s, string t) {
+        int[] set1 = new int[256];
+        int[] set2 = new int[256];
+        
+        for (int index = 0; index < 256; index++){
+            set1[index] = 0;
+            set2[index] = 0;
+        }
+        
+        for (int index = 0; index < s.Length; index++){
+            if (set1[s[index]] != set2[t[index]]){
+                return false;
+            }
+            
+            set1[s[index]] = index + 1;
+            set2[t[index]] = index + 1;
+        }
+        
+        return true;
+    }
+}
