@@ -1,0 +1,33 @@
+//C# Palindrome Number
+
+/*
+Determine whether an integer is a palindrome. Do this without extra space.
+*/
+
+public class Solution {
+    public bool IsPalindrome(int num) {
+        if (num < 0) {
+            return false;
+        }
+        
+        if (num < 10) { 
+            return true;
+        }
+        
+        int n1 = num;
+        int n2 = 0;
+        int digit = 0;
+        
+        while (n1 > 0){
+            digit = n1 % 10;
+            n2 = (n2 * 10) + digit;
+            n1 = n1 / 10;
+        }
+        
+        if (n2 == num){
+            return true;
+        }
+        
+        return false;
+    }
+}
