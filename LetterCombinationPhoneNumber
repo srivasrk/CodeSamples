@@ -1,0 +1,41 @@
+//C# Letter Combination of Phone Number
+
+/*
+Given a digit string, return all possible letter combinations that the number could represent.
+
+A mapping of digit to letters (just like on the telephone buttons) is given below.
+1=No chars
+2=a,b,c
+3=d,e,f...
+
+Input:Digit string "23"
+Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"]
+
+Note: Although the above answer is in lexicographical order, your answer could be in any order you want.
+*/
+
+public class Solution {
+    
+    private string[] Keys = { "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
+    public IList<string> LetterCombinations(string digits) {
+        
+        IList<string> combinations = new List<string>();
+        GetCombinations(combinations, digits, 0, "");
+        return combinations;
+        
+    }
+    
+    public void GetCombinations(IList<string> combinations, string digits, int index, string current){
+        if (index >= digits.Length){
+            if (current != ""){
+                combinations.Add(current);
+            }
+            return;
+        }
+        
+        string Key = Keys[digits[index] - '0'];
+        for (int i = 0; i < Key.Length; i++){
+            GetCombinations(combinations, digits, index+1, current + Key[i]);
+        }
+    }
+}
