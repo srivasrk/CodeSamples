@@ -1,0 +1,58 @@
+//C# Number of Islands
+
+/*
+Given a 2d grid map of '1's (land) and '0's (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.
+
+Example 1:
+
+11110
+11010
+11000
+00000
+Answer: 1
+
+Example 2:
+
+11000
+11000
+00100
+00011
+Answer: 3
+*/
+
+public class Solution {
+    public int NumIslands(char[,] grid) {
+        
+        int rows = grid.GetLength(0);
+        int cols = grid.GetLength(1);
+        int count = 0;
+        
+        for (int row = 0; row < rows; row++){
+            for (int col = 0; col < cols; col++){
+                if (grid[row, col] == '1'){
+                    CheckIslandAndMark(grid, row, col);//This will mark the closest cells as 0 (part of same island)
+                    count++;
+                }
+            }
+        }
+        
+        return count;
+    }
+    
+    public void CheckIslandAndMark(char[,] grid, int row, int col){
+        
+        int rows = grid.GetLength(0);
+        int cols = grid.GetLength(1);
+        
+        if ((row < 0) || (col < 0) || (row >= rows) || (col >= cols) || (grid[row, col] != '1')){
+            return;
+        } else {
+            grid[row, col] = '0';
+            CheckIslandAndMark(grid, row - 1, col);
+            CheckIslandAndMark(grid, row + 1, col);
+            CheckIslandAndMark(grid, row, col + 1);
+            CheckIslandAndMark(grid, row, col - 1);
+        }
+        
+    }
+}
