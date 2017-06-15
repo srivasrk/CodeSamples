@@ -1,0 +1,43 @@
+//C# Top K Frequent Elements
+/*
+Given a non-empty array of integers, return the k most frequent elements.
+
+For example,
+Given [1,1,1,2,2,3] and k = 2, return [1,2].
+
+Note: 
+You may assume k is always valid, 1 ≤ k ≤ number of unique elements.
+Your algorithm's time complexity must be better than O(n log n), where n is the array's size.
+*/
+
+public class Solution {
+    public IList<int> TopKFrequent(int[] nums, int k) {
+        
+        Dictionary<int, int> FrequencyMap = new Dictionary<int, int>();
+        IList<int> TopFrequentList = new List<int>();
+        int value;
+        
+        for (int index = 0; index < nums.Length; index++){
+            
+            if (FrequencyMap.TryGetValue(nums[index], out value)) {
+                FrequencyMap[nums[index]] = value + 1;
+            } else {
+                FrequencyMap.Add(nums[index], 1);
+            }
+        }
+       
+        //Sort the dictionary by value       
+        FrequencyMap = FrequencyMap.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+        
+        foreach (KeyValuePair<int, int> entry in FrequencyMap) {
+            //Console.WriteLine("Key: {0}, Value: {1}", entry.Key, entry.Value);
+            TopFrequentList.Add(entry.Key);
+            if (--k <= 0) {
+                break;
+            }
+        }
+        
+        return TopFrequentList;
+        
+    }
+}
