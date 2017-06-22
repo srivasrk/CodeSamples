@@ -19,8 +19,8 @@ Output: "bb"
 
 public class Solution {
     
-    private int start = 0;
-    private int size = 0;
+    private int start = 0;//start index of palindrome
+    private int size = 0;//length of the palindrome
     
     public string LongestPalindrome(string s) {
         int len = s.Length;
@@ -30,14 +30,14 @@ public class Solution {
         }
         
         for (int index = 0; index < len; index++){
-            SetIndexAndSize(s, index, index);//for odd length
-            SetIndexAndSize(s, index, index+1);//for even length
+            SetStartIndexAndSize(s, index, index);//for odd length
+            SetStartIndexAndSize(s, index, index+1);//for even length
         }
         
         return s.Substring(start, size);
     }
     
-    private void SetIndexAndSize(string s, int left, int right){
+    private void SetStartIndexAndSize(string s, int left, int right){
         while ((left >= 0) && (right < s.Length) && s[left] == s[right]){
             left--;
             right++;
