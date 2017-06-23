@@ -1,0 +1,47 @@
+//C# Rotate image / rotate matrix / in place
+
+/*
+You are given an n x n 2D matrix representing an image.
+
+Rotate the image by 90 degrees (clockwise).
+
+Follow up:
+Could you do this in-place?
+*/
+
+public class Solution {
+    public void Rotate(int[,] matrix) {
+        
+        int n = matrix.GetLength(0);
+        int t;
+        
+        //for eg: start with 
+        //1 2 3
+        //4 5 6
+        //7 8 9
+        for (int i = 0; i < n; i++){
+            for (int j = 0; j < n/2; j++){
+                t = matrix[i,j];
+                matrix[i,j] = matrix[i,n-j-1];
+                matrix[i,n-j-1] = t;
+            }
+        }
+        //now we have 
+        //3 2 1 
+        //6 5 4 
+        //9 8 7 
+
+        for (int i = 0; i < n; i++){
+            for (int j = 0; j < n-i; j++){
+                t = matrix[i,j];
+                matrix[i,j] = matrix[n-j-1,n-i-1];
+                matrix[n-j-1,n-i-1] = t;
+            }
+        }
+        //now we have 
+        //7 4 1 
+        //8 5 2 
+        //9 6 3 
+        
+    }
+}
