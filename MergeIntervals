@@ -1,0 +1,48 @@
+//C# Merge Intervals
+
+/*
+Given a collection of intervals, merge all overlapping intervals.
+
+For example,
+Given [1,3],[2,6],[8,10],[15,18],
+return [1,6],[8,10],[15,18].
+*/
+
+/**
+ * Definition for an interval.
+ * public class Interval {
+ *     public int start;
+ *     public int end;
+ *     public Interval() { start = 0; end = 0; }
+ *     public Interval(int s, int e) { start = s; end = e; }
+ * }
+ */
+public class Solution {
+    public IList<Interval> Merge(IList<Interval> intervals) {
+        
+        if (intervals.Count == 0) {
+            return intervals;
+        }
+        
+        IEnumerable<Interval> sortedEnum = intervals.OrderBy(interval=>interval.start);
+        intervals = sortedEnum.ToList();
+        //list.Sort((a,b) => a.Start - b.Start);
+        
+        IList<Interval> merged = new List<Interval>();
+        int start = intervals[0].start;
+        int end = intervals[0].end;
+        
+        for(int index = 0; index < intervals.Count; index++){
+            if (intervals[index].start <= end){
+                end = Math.Max(intervals[index].end, end);
+            } else {
+                merged.Add(new Interval(start, end));
+                start = intervals[index].start;
+                end = intervals[index].end;
+            }
+        }
+        
+        merged.Add(new Interval(start, end));
+        return merged;
+    }
+}
