@@ -29,12 +29,18 @@ public class Solution {
             max = Math.Max(nums[index], max);
             min = Math.Min(nums[size-index-1], min);
             
+            //we compare all elems with the max. In a fully sorted array, max should be at the 
+            //right-most index. any other element. So, all elements get compared, because max
+            //was initialized with 0th element. If the elements are not smaller than max as we
+            //move towards right, end will not change.
+            
             if (nums[index] < max) {
-                end = index; //end will keep moving to right ->
+                end = index; //end will keep moving to right->
+                Console.WriteLine("end is now: {0}",end);
             }
             
             if (nums[size-index-1] > min){
-                start = size-index-1; //start will keep moving to the left <-
+                start = size-index-1;
             }
         }
         
