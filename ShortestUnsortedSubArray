@@ -37,7 +37,6 @@ public class Solution {
             if (nums[index] < max) { 
                 //max was init to 0th index. all the elements to the right should be "ideally" smaller. if not move end.
                 end = index; //end will keep moving to right->
-                Console.WriteLine("end is now: {0}",end);
             }
             
             if (nums[size-index-1] > min){
