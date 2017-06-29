@@ -2,6 +2,35 @@
 /*
 [4,5,6,0,1,2,3]
 */
+
+//There are two solutions in this file
+
+
+//Solution 1
+
+public class Solution {
+    public int FindMin(int[] nums) {
+        
+        int left = 0;
+        int right = nums.Length - 1;
+        
+        while (left < right) {
+            int mid = left + (right - left)/2;
+            
+            if (nums[mid] > nums[right]){
+                left = mid+1;
+            } else {
+                right = mid;
+            }
+        }
+        return nums[left];
+        
+    }
+}
+
+
+//Solution 2
+
 public class Solution {
     
     public int FindMinimum(int[] arr, int low, int high){
