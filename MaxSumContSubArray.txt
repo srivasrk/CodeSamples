@@ -5,16 +5,35 @@ Find the contiguous subarray within an array (containing at least one number) wh
 For example, given the array [-2,1,-3,4,-1,2,1,-5,4],
 the contiguous subarray [4,-1,2,1] has the largest sum = 6.
 */
+
+/*
+Explanation:
+O(n) runtime, O(1) space – Dynamic programming:
+To devise a dynamic programming formula, let us assume that we are calculating the
+maximum sum of subarray that ends at a specific index.
+Let us denote that:
+f(k) = Maximum sum of subarray ending at index k.
+Then,
+f(k) = max( f(k-1) + A[k], A[k] )
+Using an array of size n, We could deduce the final answer by as f(n – 1), with the initial
+state of f(0) = A[0]. Since we only need to access its previous element at each step, two
+variables are sufficient. 
+
+Notice the difference between the two: maxEndingHere and maxSoFar; 
+the former (maxEndingHere) is the maximum sum of subarray that must end at index k, 
+while the latter (maxSoFar) is the global maximum subarray sum.
+*/
+
 public class Solution {
     public int MaxSubArray(int[] nums) {
         
         int maxSoFar = nums[0];
-        int currentMax = nums[0];
+        int maxEndingHere = nums[0];
         
         for (int index=1; index<nums.Length; index++){
             
-            currentMax = Math.Max(nums[index], currentMax + nums[index]);
-            maxSoFar = Math.Max(maxSoFar, currentMax);
+            maxEndingHere = Math.Max(nums[index], maxEndingHere + nums[index]);
+            maxSoFar = Math.Max(maxSoFar, maxEndingHere);
             
         }
         
