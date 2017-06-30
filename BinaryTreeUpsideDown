@@ -8,6 +8,20 @@ node that shares the same parent node) or empty, flip it upside down and turn it
 where the original right nodes turned into left leaf nodes. Return the new root.
 */
 
+/*
+Explanation:
+This is a special tree. Only one such tree possible.
+       1               1
+     /  \            /     
+    2    3  ==>     2 -- 3 
+   / \             / 
+  4   5           4 -- 5
+   
+4 is the new root  
+    
+*/
+
+
 public TreeNode upsideDownBinaryTree(TreeNode root) {
     if(root == null || root.left == null) {
         return root;
