@@ -1,0 +1,70 @@
+//C# Unique Path 2 With Obstacles
+
+//Smilar to UniquePaths
+
+/*
+Follow up for "Unique Paths":
+
+Now consider if some obstacles are added to the grids. How many unique paths would there be?
+
+An obstacle and empty space is marked as 1 and 0 respectively in the grid.
+
+For example,
+There is one obstacle in the middle of a 3x3 grid as illustrated below.
+
+[
+  [0,0,0],
+  [0,1,0],
+  [0,0,0]
+]
+The total number of unique paths is 2.
+
+Note: m and n will be at most 100.
+*/
+public class Solution {
+    public int UniquePathsWithObstacles(int[,] obstacleGrid) {
+                
+        int rows = obstacleGrid.GetLength(0);
+        int cols = obstacleGrid.GetLength(1);
+        
+        int[,] memo = new int[rows + 1, cols + 1];
+        
+        for (int i = 0; i <= rows; i++){
+            for (int j = 0; j <= cols; j++){
+                memo[i, j] = -1;
+            }
+        }
+        
+        return FindUniquePath(obstacleGrid, 0, 0, memo);
+    }
+    
+    private int FindUniquePath(int[,] obstacleGrid, int row, int col, int[,] memo){
+        
+        int rows = obstacleGrid.GetLength(0);
+        int cols = obstacleGrid.GetLength(1);
+        
+        
+        if ((row >= rows) || (col >= cols)) {
+            return 0;
+        }
+        
+        if (obstacleGrid[row, col] == 1){
+            return 0;
+        }
+        
+        if ((row == rows - 1) && (col == cols - 1)) {
+            return 1;
+        }
+        
+        if (memo[row + 1, col] == -1){
+            memo[row + 1, col] = FindUniquePath(obstacleGrid, row + 1, col, memo);
+        }
+        
+        if (memo[row, col + 1] == -1){
+            memo[row, col + 1] = FindUniquePath(obstacleGrid, row, col + 1, memo);
+        }
+        
+        return (memo[row + 1, col] + memo[row, col + 1]);
+        
+    }
+}
