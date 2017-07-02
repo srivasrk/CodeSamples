@@ -1,0 +1,51 @@
+//C# Binary Tree Maximum Path Sum
+
+/*
+Given a binary tree, find the maximum path sum.
+
+For this problem, a path is defined as any sequence of nodes from some starting 
+node to any node in the tree along the parent-child connections. 
+The path must contain at least one node and does not need to go through the root.
+
+For example:
+Given the below binary tree,
+
+       1
+      / \
+     2   3
+Return 6.
+*/
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    
+    int max;
+    
+    public int MaxPathSum(TreeNode root) {
+        max = int.MinValue;
+        FindPathSum(root);        
+        return max;
+        
+    }
+    
+    private int FindPathSum(TreeNode root){
+        if (root == null) {
+            return 0;
+        }
+        
+        int leftSum = Math.Max(0, FindPathSum(root.left));
+        int rightSum = Math.Max(0, FindPathSum(root.right));
+        
+        max = Math.Max(max, leftSum + rightSum + root.val);
+        
+        return (Math.Max(leftSum, rightSum) + root.val);
+    }
+}
