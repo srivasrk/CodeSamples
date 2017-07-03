@@ -28,8 +28,6 @@ public class Solution {
             return l1;
         }
         
-        ListNode temp;
-        
         if (l1.val > l2.val){
             l2.next = MergeTwoLists(l1, l2.next);
             return l2;
