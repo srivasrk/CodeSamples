@@ -1,0 +1,103 @@
+//C# Check/Validate Grid of Sudoku2 : Code Fights
+
+/*
+Sudoku is a number-placement puzzle. The objective is to fill a 9 × 9 grid 
+with numbers in such a way that each column, each row, and each of the 
+nine 3 × 3 sub-grids that compose the grid all contain all of the numbers 
+from 1 to 9 one time.
+
+Implement an algorithm that will check whether the given grid of numbers 
+represents a valid Sudoku puzzle according to the layout rules described 
+above. Note that the puzzle represented by grid does not have to be solvable.
+
+Example
+grid = [['.', '.', '.', '1', '4', '.', '.', '2', '.'],
+        ['.', '.', '6', '.', '.', '.', '.', '.', '.'],
+        ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
+        ['.', '.', '1', '.', '.', '.', '.', '.', '.'],
+        ['.', '6', '7', '.', '.', '.', '.', '.', '9'],
+        ['.', '.', '.', '.', '.', '.', '8', '1', '.'],
+        ['.', '3', '.', '.', '.', '.', '.', '.', '6'],
+        ['.', '.', '.', '.', '.', '7', '.', '.', '.'],
+        ['.', '.', '.', '5', '.', '.', '.', '7', '.']]
+the output should be
+sudoku2(grid) = true;
+
+grid = [['.', '.', '.', '.', '2', '.', '.', '9', '.'],
+        ['.', '.', '.', '.', '6', '.', '.', '.', '.'],
+        ['7', '1', '.', '.', '7', '5', '.', '.', '.'],
+        ['.', '7', '.', '.', '.', '.', '.', '.', '.'],
+        ['.', '.', '.', '.', '8', '3', '.', '.', '.'],
+        ['.', '.', '8', '.', '.', '7', '.', '6', '.'],
+        ['.', '.', '.', '.', '.', '2', '.', '.', '.'],
+        ['.', '1', '.', '2', '.', '.', '.', '.', '.'],
+        ['.', '2', '.', '.', '3', '.', '.', '.', '.']]
+the output should be
+sudoku2(grid) = false.
+
+The given grid is not correct because there are two 1s in the second 
+column. Each column, each row, and each 3 × 3 subgrid can only contain
+the numbers 1 through 9 one time.
+*/
+
+bool sudoku2(char[][] grid) {
+
+    int size = grid.GetLength(0);
+    HashSet<char> map = new HashSet<char>();
+    
+    //Check for unique numbers (1-9) in rows
+    for (int i = 0; i < size; i++){
+        map.Clear();
+        for (int j = 0; j < size; j++){
+            if (grid[i][j] == '.') {
+                continue;
+            } else if (map.Contains(grid[i][j])) {
+                return false;
+            } else {
+                map.Add(grid[i][j]);
+            }
+        }
+    }
+    
+    //Check for unique numbers (1-9) in columns
+    for (int j = 0; j < size; j++){
+        map.Clear();
+        for (int i = 0; i < size; i++){
+            if (grid[i][j] == '.') {
+                continue;
+            } else if (map.Contains(grid[i][j])) {
+                return false;
+            } else {
+                map.Add(grid[i][j]);
+            }
+        }
+    }
+    
+    //Check for unique numbers (1-9) in 3x3 sub-grids
+    for (int i = 0; i < size; i = i + 3){
+        for (int j = 0; j < size; j = j + 3){            
+            if (CheckGrid(grid, i, j, map) == false){
+                return false;
+            }
+        }
+    }
+        
+    return true;
+}
+
+private bool CheckGrid(char[][] grid, int row, int col, HashSet<char> map){
+    map.Clear();
+    for (int i = row; i < row+3; i++){
+        for (int j = col; j < col+3; j++){
+            if (grid[i][j] == '.') {
+                continue;
+            } else if (map.Contains(grid[i][j])) {
+                return false;
+            } else {
+                map.Add(grid[i][j]);
+            }    
+        }
+    }
+    
+    return true;
+}
