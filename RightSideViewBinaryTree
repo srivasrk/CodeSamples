@@ -1,6 +1,7 @@
 //C# code Right side view of a Binary Tree
 /*
-Given a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.
+Given a binary tree, imagine yourself standing on the right side of it, 
+return the values of the nodes you can see ordered from top to bottom.
 
 For example:
 Given the following binary tree,
@@ -13,6 +14,49 @@ You should return [1, 3, 4].
 
 */
 
+//This file has 2 solutions
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+ 
+ //Solution 1
+public class Solution {   
+    
+    public void GetRightSideView(TreeNode root, IList<int> view, int level){        
+        if (root == null){
+            return;
+        }         
+        
+        //check if val was already added for this level. if a value for this 
+        //level was already added, the view.Count will be greater than level
+        //eg: if only root was added, then view.Count = 1, children of root 
+        //need to be added. if the right child was already added, then view.Count
+        //will be greater than 1. 
+        if (level == view.Count){
+            view.Add(root.val);
+        }        
+        
+        //right is called first. if there is a right child, it will be added, and left will not be added.
+        GetRightSideView(root.right, view, level+1);        
+        GetRightSideView(root.left, view, level+1);               
+    }
+    
+    public IList<int> RightSideView(TreeNode root) {        
+        List<int> view = new List<int>();
+        GetRightSideView(root, view, 0);
+        return view;        
+    }
+}
+
+
+//Solution 2
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -24,29 +68,40 @@ You should return [1, 3, 4].
  */
 public class Solution {
     
-    
-    public void GetRightSideView(TreeNode root, IList<int> view, int level){
-        
+    private int GetHeight(TreeNode root){
         if (root == null){
-            return;
-        } 
-        
-        if (level == view.Count)
-        {
-            view.Add(root.val);
+            return 0;
         }
         
-        GetRightSideView(root.right, view, level+1);
-        GetRightSideView(root.left, view, level+1);
-        
-        
+        return (Math.Max(GetHeight(root.left), GetHeight(root.right)) + 1);
+    }
+    
+    private void GetLevel(TreeNode root, IList<int> levelView, int level){
+        if (root == null){
+            return;
+        }        
+        if (level == 0){
+            levelView.Add(root.val);
+            return;
+        }        
+        GetLevel(root.left, levelView, level - 1);
+        GetLevel(root.right, levelView, level - 1);
     }
     
     public IList<int> RightSideView(TreeNode root) {
+        int h = GetHeight(root);
+        IList<int> res = new List<int>();
+        IList<int> levelView = new List<int>();
+        if (h > 0){
+            for(int i = 0; i < h; i++){
+                levelView.Clear();
+                GetLevel(root, levelView, i);
+                if (levelView.Count > 0){
+                    res.Add(levelView[levelView.Count - 1]);
+                }
+            }
+        }
         
-        List<int> view = new List<int>();
-        GetRightSideView(root, view, 0);
-        return view;
-        
+        return res;
     }
 }
