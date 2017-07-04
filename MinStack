@@ -18,6 +18,16 @@ minStack.top();      --> Returns 0.
 minStack.getMin();   --> Returns -2.
 */
 
+/*
+Explanation:
+1. When you have to push a value which is not min simply push it.
+2. When you have to push a value which is smaller than min (ie new min), then
+    push the "old min value" and then the "new min value", and update your min variable
+3. When you have to pop a value which is not min, simply pop it.
+4. When you have to pop a value which is the min, then you have to pop twice. first 
+    pop gives you the top, second pop will give you the new min value. Remember when
+    you pushed a "new min value", you pushed the "old min value" too
+*/
 public class MinStack {
 
     int min;
