@@ -1,7 +1,10 @@
 //C# word break
 
 /*
-Given a non-empty string s and a dictionary wordDict containing a list of non-empty words, determine if s can be segmented into a space-separated sequence of one or more dictionary words. You may assume the dictionary does not contain duplicate words.
+Given a non-empty string s and a dictionary wordDict containing a list
+of non-empty words, determine if s can be segmented into a space-separated 
+sequence of one or more dictionary words. You may assume the dictionary 
+does not contain duplicate words.
 
 For example, given
 s = "leetcode",
@@ -13,19 +16,22 @@ Return true because "leetcode" can be segmented as "leet code".
 public class Solution {
     public bool WordBreak(string s, IList<string> wordDict) {
         
-        bool[] b = new bool[s.Length + 1];
-        b[0] = true;
+        bool[] wordEndsAt = new bool[s.Length + 1];
+        wordEndsAt[0] = true;
         
-        for (int i = 1; i <= s.Length; i++){
-            for (int j = 0; j < i; j ++){
-                if ((b[j]) && (wordDict.Contains(s.Substring(j, i-j)))){
-                    b[i] = true;
+        //e denotes end index of a substring. Not length of substring.
+        //if wordEndsAt(i) == true, then there is a substring which ends here.
+        //Also, that substring started at an index where another substring had ended.
+        
+        for (int e = 1; e <= s.Length; e++){            
+            for (int start = 0; start < e; start++){
+                if ((wordEndsAt[start]) && (wordDict.Contains(s.Substring(start, e - start)))){
+                    wordEndsAt[e] = true;
                     break;
-                }
-            } 
+                }                
+            }  
         }
         
-        return b[s.Length];
-        
+        return wordEndsAt[s.Length];        
     }
 }
