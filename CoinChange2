@@ -1,0 +1,75 @@
+//C# Coin Change 2 - LeetCode
+
+/*
+You are given coins of different denominations and a total amount of 
+money amount. Write a function to compute the fewest number of coins 
+that you need to make up that amount. If that amount of money cannot
+be made up by any combination of the coins, return -1.
+
+Example 1:
+coins = [1, 2, 5], amount = 11
+return 3 (11 = 5 + 5 + 1)
+
+Example 2:
+coins = [2], amount = 3
+return -1.
+
+Note:
+You may assume that you have an infinite number of each kind of coin.
+*/
+
+
+/*
+Explanation:
+
+Break down the problem
+What is the number of Coins needed to make "Amount"
+Include Coin1, Now what is the num of coins required to make "Amount-Coin1"
+
+The num returned + "1". +1 is done, because nested call returned number of
+ways to make "Amount-Coin1", we have to include 'Coin1' in the count.
+
+if an amount can not be made, return -1, and discard negative value.
+*/
+
+public class Solution {
+    public int CoinChange(int[] coins, int amount) {        
+        if (amount < 1){
+            return 0;
+        }
+        return MakeChange(coins, amount, new Dictionary<int, int>());
+    }
+    
+    private int MakeChange(int[] coins, int amount, Dictionary<int, int> map){
+        
+        if (amount < 0){
+            return -1;
+        }
+        
+        if (amount == 0){
+            return 0;
+        }
+        
+        if (map.ContainsKey(amount)){
+            return map[amount];
+        }
+        
+        int min = int.MaxValue;
+        for (int i = 0; i < coins.Length; i++){
+            int x = MakeChange(coins, amount - coins[i], map);
+            if ((x >= 0) && (x < min)) {
+                min = x + 1; // +1 to include the count of the current coins[i]. MakeChange returned count for amount-coins[i]
+            }            
+        }
+                
+        if (min < int.MaxValue){            
+            map.Add(amount, min);
+            return min;
+        } else {                                
+            map.Add(amount, -1);
+            return -1;
+        }
+        
+    }
+    
+}
