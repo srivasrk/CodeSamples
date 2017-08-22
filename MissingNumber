@@ -1,0 +1,28 @@
+//C# Missing number
+
+/*
+Given an array containing n distinct numbers taken from 0, 1, 2, ..., n, 
+find the one that is missing from the array.
+
+For example,
+Given nums = [0, 1, 3] return 2.
+
+Note:
+Your algorithm should run in linear runtime complexity. 
+Could you implement it using only constant extra space complexity?
+*/
+
+public class Solution {
+    public int MissingNumber(int[] nums) {
+        
+        int xor_all = 0;
+        int i = 0;
+        
+        for (i = 0; i < nums.Length; i++){
+            xor_all = i ^ nums[i] ^ xor_all;
+        }
+        
+        return xor_all ^ i;//This is for the num[i] which is missing from the array
+        
+    }
+}
