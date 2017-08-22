@@ -1,0 +1,52 @@
+//C++ Reverse a doubly linked list - hackerrank
+
+/*
+You’re given the pointer to the head node of a doubly linked list. 
+Reverse the order of the nodes in the list. 
+The head node might be NULL to indicate that the list is empty.
+
+Input Format 
+You have to complete the Node* Reverse(Node* head) method which 
+takes one argument - the head of the doubly linked list. 
+You should NOT read any input from stdin/console.
+
+Output Format 
+Change the next and prev pointers of all the nodes so that 
+the direction of the list is reversed. Then return the head 
+node of the reversed list. Do NOT print anything to stdout/console.
+*/
+
+/*
+   Reverse a doubly linked list, input list may also be empty
+   Node is defined as
+   struct Node
+   {
+     int data;
+     Node *next;
+     Node *prev;
+   }
+*/
+Node* Reverse(Node* head)
+{
+    // Complete this function
+    // Do not write the main method. 
+    
+    if (head == NULL){
+        return head;
+    }
+    
+    Node* next = head->next;
+    Node* curr = head;
+    Node* prev = NULL;
+    
+    while (curr != NULL){
+        next = curr->next;
+        curr->next = prev;
+        curr->prev = next;
+        prev = curr;
+        curr = next;                      
+    }
+    
+    head=prev;
+    return head;
+}
