@@ -7,7 +7,7 @@ the contiguous subarray [4,-1,2,1] has the largest sum = 6.
 */
 
 /*
-Explanation:
+Explanation: Kadane's Algorithm (https://www.youtube.com/watch?v=86CQq3pKSUw)
 O(n) runtime, O(1) space – Dynamic programming:
 To devise a dynamic programming formula, let us assume that we are calculating the
 maximum sum of subarray that ends at a specific index.
