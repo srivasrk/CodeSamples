@@ -1,0 +1,79 @@
+//C# Longest Increasing Subsequence
+
+/*
+This file has 2 solutions
+
+Given an unsorted array of integers, find the length of longest increasing subsequence.
+
+For example,
+Given [10, 9, 2, 5, 3, 7, 101, 18],
+The longest increasing subsequence is [2, 3, 7, 101], therefore the length is 4. 
+Note that there may be more than one LIS combination, it is only necessary for you to return the length.
+
+Your algorithm should run in O(n2) complexity.
+
+Follow up: Could you improve it to O(n log n) time complexity?
+*/
+
+//Time: O(nLogn)
+//Explanation: Approach #4 @ https://leetcode.com/problems/longest-increasing-subsequence/solution/
+public class Solution {
+    public int LengthOfLIS(int[] nums) {
+        int[] lis = new int[nums.Length];
+        
+        for (int i = 0; i < lis.Length; i++){
+            lis[i] = 0;
+        }
+        
+        int len = 0;
+        int index = 0;
+        
+        for (int i = 0; i < nums.Length; i++ ){
+            //pass a sub array of length = len
+            index = Array.BinarySearch(lis.Take(len).ToArray(), nums[i]);            
+            if (index < 0) {
+                index = -(index + 1);                
+            }
+            
+            lis[index] =  nums[i];
+            if (index == len) {
+                len++;
+            }
+        }
+        
+        return len;
+        
+    }
+}
+
+//Time: O(n^2)
+//Explanation: Approach #3 @ https://leetcode.com/problems/longest-increasing-subsequence/solution/
+public class Solution {
+    public int LengthOfLIS(int[] nums) {
+        
+        int[] lis = new int[nums.Length];
+        
+        for (int i = 0 ; i < lis.Length; i++) {
+            lis[i] = 1;
+        }
+        
+        for (int i = 1; i < lis.Length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) {
+                    lis[i] = Math.Max(lis[i], lis[j] + 1);
+                }
+            }
+        }
+        
+        int max = 0;
+        for (int i = 0; i < lis.Length; i++) {
+            // Console.WriteLine(lis[i]);
+            if (max < lis[i]) {
+                max = lis[i];
+            }
+        }
+        
+        return max;
+        
+    }
+}
