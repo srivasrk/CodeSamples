@@ -1,5 +1,7 @@
 //C# Missing number
 
+//This file has 2 solutions
+
 /*
 Given an array containing n distinct numbers taken from 0, 1, 2, ..., n, 
 find the one that is missing from the array.
@@ -12,6 +14,23 @@ Your algorithm should run in linear runtime complexity.
 Could you implement it using only constant extra space complexity?
 */
 
+//Solution 1
+public int MissingNumber(int[] nums) {
+
+    int len = nums.Length;
+    int TotalSum = 0;
+
+    //Sum of N natural numbers
+    int ExpectedSum = ((len) * (len + 1))/ 2; //n ((n + 1)/2)
+
+    for (int i = 0; i < len; i++) {
+        TotalSum += nums[i];
+    }
+    return ExpectedSum - TotalSum;
+
+}
+
+//Solution 2
 public class Solution {
     public int MissingNumber(int[] nums) {
         
