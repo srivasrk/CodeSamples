@@ -21,11 +21,13 @@ public class Solution {
         map.Add('M', 1000);
         
         for (int i = 0; i < s.Length; i ++){
+            // Explanation
             // last char in 's' is always added to the value.
             // check if preceding digit is smaller then, subtract the preceding number from value
-            // for eg: cm means 900. c=100, m=1000. c is smaller than m. value is 100 currently.
-            //        Subtract c from value. So, value = value - 100. value = -100.
+            // for eg: cm equals 900. c=100, m=1000. Initial value is 0.
+            //        c is smaller than m. So, subtract c(=100) from value(=0). value = -100.
             //        Now, Add m. value = (-100) + 1000 = 900
+            
             if ((i < s.Length - 1) && (map[s[i]] < map[s[i + 1]]))
             {
                 result = result - map[s[i]];
