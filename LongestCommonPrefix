@@ -1,0 +1,46 @@
+/*
+Write a function to find the longest common prefix string amongst an array of strings.
+If there is no common prefix, return an empty string "".
+
+Example 1:
+Input: ["flower","flow","flight"]
+Output: "fl"
+
+Example 2:
+Input: ["dog","racecar","car"]
+Output: ""
+Explanation: There is no common prefix among the input strings.
+Note:
+
+All given inputs are in lowercase letters a-z.
+*/
+
+public class Solution {
+    
+    private string LCP(string[] strs, int index, string prefix){
+         
+        //Console.WriteLine("index:{0}, prefix:{1}", index, prefix);
+        
+        if (strs.Length == 0) {
+            return "";
+        }
+                
+        for(int i = 0; i < strs.Length; i++) {                           
+            if (index >= strs[i].Length) {
+                return prefix;
+            } else if (strs[0][index] == strs[i][index]) {
+                continue;
+            } else {
+                return prefix;
+            }
+        }
+        
+        prefix = prefix + strs[0][index];
+        prefix = LCP(strs, index + 1, prefix);        
+        return prefix;
+    }
+    
+    public string LongestCommonPrefix(string[] strs) {
+        return LCP(strs, 0, "");        
+    }
+}
