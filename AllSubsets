@@ -20,6 +20,28 @@ If nums = [1,2,3], a solution is:
 ]
 */
 
+//Solution 1
+
+public class Solution {
+    public IList<IList<int>> Subsets(int[] nums) {
+        IList<IList<int>> result = new List<IList<int>>();
+        result.Add(new List<int>()); //Add empty list
+        
+        for (int i = 0; i < nums.Length; i++) {
+            int size = result.Count();
+            
+            for (int j = 0; j < size; j++) {
+                IList<int> subset = new List<int>(result[j]);//make a copy of an existing list
+                subset.Add(nums[i]);//add the nums[i] to the new list
+                result.Add(subset);//add the new list to the existing list of lists
+            }
+        }
+        return result;
+    }
+}
+
+//Solution 2
+
 public class Solution {
     public IList<IList<int>> Subsets(int[] nums) {
         
