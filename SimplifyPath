@@ -1,0 +1,51 @@
+/*
+Given an absolute path for a file (Unix-style), simplify it.
+
+For example,
+path = "/home/", => "/home"
+path = "/a/./b/../../c/", => "/c"
+
+Corner Cases:
+
+Did you consider the case where path = "/../"?
+In this case, you should return "/".
+
+Another corner case is the path might contain multiple slashes '/' together, such as "/home//foo/".
+In this case, you should ignore redundant slashes and return "/home/foo".
+*/
+
+public class Solution {
+    public string SimplifyPath(string path) {
+        
+        string[] dirs = path.Split('/');
+        
+        var result = "";
+        var final = new List<string>();
+        var tokensToAvoid = new HashSet<string>();
+        tokensToAvoid.Add(".");
+        tokensToAvoid.Add("");
+        
+        for(int i = 0; i < dirs.Length; i++) {
+            if (tokensToAvoid.Contains(dirs[i])) {
+                
+            } else if (dirs[i] == "..") {
+                if (final.Count > 0) {
+                    final.RemoveAt(final.Count - 1);
+                }
+            } else {
+                final.Add(dirs[i]);
+            }                       
+        }
+        
+        for(int i = 0; i < final.Count; i++) {
+            result = result + "/" + final[i]  ; 
+        }
+        
+        if (result == "") {
+            return "/";
+        } else {        
+            return result;
+        }
+        
+    }
+}
