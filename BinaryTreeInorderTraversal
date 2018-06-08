@@ -45,6 +45,25 @@ public class Solution {
         }
         
         return l;
+    }    
+}
+
+// Solution 2: Recursive
+
+public class Solution {
+    public IList<int> InorderTraversal(TreeNode root) {
+        return Inorder(new List<int>(), root);
     }
     
+    private IList<int> Inorder(IList<int> l, TreeNode r) {
+        if (r == null) {
+            return l;
+        }
+                    
+        Inorder(l, r.left);        
+        l.Add(r.val);
+        Inorder(l, r.right);
+        
+        return l;        
+    }
 }
