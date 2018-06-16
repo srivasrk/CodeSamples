@@ -8,11 +8,9 @@ The input string does not contain leading or trailing spaces and the words are a
 For example,
 Given s = "the sky is blue",
 return "blue is sky the".
-
-Could you do it in-place without allocating extra space?
 */
 
-
+// Solution 1
 public class Solution {
     
     public void Reverse(char[] s, int start, int end){
@@ -52,5 +50,36 @@ public class Solution {
         
         Reverse(s, k, s.Length - 1);  
         
+    }
+}
+
+//Solution 2
+public class Solution {
+    public string ReverseWords(string s) {
+    
+        if (string.IsNullOrEmpty(s)) {
+            return s;
+        }
+        
+        var result = new StringBuilder();
+        var temp = new StringBuilder();
+        
+        int start = s.Length - 1;;
+        
+        while (start >= 0) {
+            if ((s[start] == ' ') && (!string.IsNullOrEmpty(temp.ToString()))) {
+                result.Append(' ' + temp.ToString());    
+                temp.Clear();
+            } else if (s[start] != ' ') {
+                temp.Insert(0, s[start]);
+            }
+            start--;
+        }
+        
+        if (!string.IsNullOrEmpty(temp.ToString())) {
+            result.Append(' ' + temp.ToString());    
+            temp.Clear();
+        }
+        return result.ToString().Trim();
     }
 }
