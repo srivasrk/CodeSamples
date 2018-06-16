@@ -29,6 +29,8 @@ Your code should preferably run in O(n) time and use only O(1) memory.
  *     public ListNode(int x) { val = x; }
  * }
  */
+ 
+ //Solution 1: Does not modify the original Linked List structure
 public class Solution {
     
     public int GetNumberOfNodes(ListNode head){
@@ -73,5 +75,47 @@ public class Solution {
         
         return prev;
         
+    }
+}
+
+//Solutiuon 2: Modifies the Linked List by reversing it
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+   
+    private void Reverse(ListNode head) {
+        
+        var curr = head;
+        ListNode prev = null;
+        var next = head;
+        
+        while (curr != null) {
+            
+            next = curr.next;
+            curr.next = prev;  
+            prev = curr; 
+            curr = next;
+        }
+    }
+    
+    public ListNode GetIntersectionNode(ListNode headA, ListNode headB) {
+        
+        Reverse(headA);     
+        Reverse(headB);
+        ListNode p = null;
+        
+        while ((headA == headB) && (headA != null) && (headB != null)) {
+            p = headA;
+            headA = headA.next;
+            headB = headB.next;               
+        }
+        
+        return p;
     }
 }
