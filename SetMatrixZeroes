@@ -3,6 +3,7 @@
 Given a m x n matrix, if an element is 0, set its entire row and column to 0. Do it in place.
 */
 
+//Solution 1 - using arrays to store rows and cols to set to zero - might contain duplicates
 public class Solution {
     public void SetZeroes(int[,] matrix) {
         
@@ -17,14 +18,12 @@ public class Solution {
                 if (matrix[row, col] == 0){
                     rowList.Add(row);
                     colList.Add(col);
-                    // Console.WriteLine("row:{0}, col:{1}", row, col);
                 }
             }
         }
         
         for (int index = 0; index < rowList.Count; index++){
             for (int col = 0; col < cols; col++){
-                // Console.WriteLine("Set to 0: rowList[index]:{0}, col:{1}", rowList[index], col);
                 matrix[rowList[index], col] = 0;
             }
         }
@@ -35,5 +34,42 @@ public class Solution {
             }
         }
         
+    }
+}
+
+
+//Solution 2 - Variation of above solution - using HashSets to avoid setting zero the same column
+
+public class Solution {
+    public void SetZeroes(int[,] matrix) {
+        var rowsToSetZero = new HashSet<int>();
+        var colsToSetZero = new HashSet<int>();
+        
+        for (int i = 0; i < matrix.GetLength(0); i++) {            
+            for (int j = 0; j < matrix.GetLength(1); j++) {
+                if (matrix[i, j] == 0) {
+                    if (!rowsToSetZero.Contains(i)) {
+                        rowsToSetZero.Add(i);
+                    }
+                    if (!colsToSetZero.Contains(j)) {
+                        colsToSetZero.Add(j); 
+                    }                                        
+                }
+            }            
+        }
+        
+        //for (int i = 0; i < rowsToSetZero.Count; i++) {
+            
+        foreach (var row in rowsToSetZero) {
+            for(int j = 0; j < matrix.GetLength(1); j++) {
+                matrix[row, j] = 0;
+            }
+        }
+        
+        foreach (var col in colsToSetZero) {
+            for (int i = 0; i < matrix.GetLength(0); i++) {
+                matrix[i, col] = 0;
+            }
+        }
     }
 }
