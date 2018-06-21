@@ -54,6 +54,14 @@ public class Solution {
 
 // Solution 2: DP O(n)
 
+/*
+Using a dp array called mem of size n+1 to save subproblem solutions. 
+mem[0] means an empty string will have one way to decode
+mem[1] means the way to decode a string of size 1
+Then check one digit and two digit combination and save the results along the way. 
+In the end, mem[n] will be the end result.
+*/
+
 public class Solution {
     public int NumDecodings(string s) {
         
