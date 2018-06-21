@@ -23,6 +23,8 @@ The flattened tree should look like:
           6
 */
 
+// Solution 1: Recursive
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -46,5 +48,35 @@ public class Solution {
         root.left = null;
         root.right = prev;
         prev = root;
+    }
+}
+
+// Solution 2: Iterative
+
+public class Solution {
+    
+    public void Flatten(TreeNode root) {
+        
+        TreeNode cur = root;
+        
+        while (cur != null) {
+            
+            if (cur.left != null) {
+                
+                TreeNode left = cur.left;
+                
+                while (left.right != null) {
+                    left = left.right;
+                }
+                
+                left.right = cur.right;
+                cur.right = cur.left;
+                cur.left = null;
+            }
+            
+            cur = cur.right;
+            
+        }
+        
     }
 }
