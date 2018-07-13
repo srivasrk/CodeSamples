@@ -47,33 +47,33 @@ Output: false
 
 public class Solution {
     public bool IsMatch(string s, string p) {
-        int star = -1;
-        int match = 0;
-        int i_s = 0;
-        int i_p = 0;
+        int index_of_star = -1;
+        int index_of_match = 0;
+        int index_of_s = 0;
+        int index_of_p = 0;
         
-        while(i_s < s.Length) {
-            if ((i_p < p.Length) && ((s[i_s] == p[i_p]) || (p[i_p] == '?'))) {
-                i_s++;
-                i_p++;
-            } else if ((i_p < p.Length) && (p[i_p] == '*')) {
-                match = i_s;
-                star = i_p;
-                i_p++;
-            } else if (star != -1) {
-                i_p = star + 1;
-                match++;
-                i_s = match;
+        while(index_of_s < s.Length) {
+            if ((index_of_p < p.Length) && ((s[index_of_s] == p[index_of_p]) || (p[index_of_p] == '?'))) {
+                index_of_s++;
+                index_of_p++;
+            } else if ((index_of_p < p.Length) && (p[index_of_p] == '*')) {
+                index_of_match = index_of_s;
+                index_of_star = index_of_p;
+                index_of_p++;
+            } else if (index_of_star != -1) {
+                index_of_p = index_of_star + 1;
+                index_of_match++;
+                index_of_s = index_of_match;
             } else {
                 return false;
             }
         } 
         
-        while ((i_p < p.Length) && (p[i_p] == '*')){
-            i_p++;
+        while ((index_of_p < p.Length) && (p[index_of_p] == '*')){
+            index_of_p++;
         }
         
-        if (i_p == p.Length) {
+        if (index_of_p == p.Length) {
             return true;
         } else {
             return false;
