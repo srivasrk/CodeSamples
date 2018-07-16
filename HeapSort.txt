@@ -1,78 +1,61 @@
-//C# Heap sort
-using System;
+//C# Heap sortusing System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HeapSort
-{
-    class Program
-    {
-        static void MaxHeapify(int[] nums, int heapSize, int index)
-        {
-            int leftChild = (index + 1) * 2 - 1;//left child of index
-            int rightChild = (index + 1) * 2;//right child of index
-            int largest = 0; //index of largest element\
-            int temp;
-
-            if ((leftChild < heapSize) && (nums[leftChild] > nums[index]))//if the left child is greater than the index
-            {
-                largest = leftChild;//left child largest so far. we will check with the right child next
-            }
-            else
-            {
-                largest = index;//index maybe the largest. we will check with the right child next
-            }
-
-            if ((rightChild < heapSize) && (nums[rightChild] > nums[largest]))//if the right child is largest. compared with the largest index
-            {
-                largest = rightChild;
-            }
-
-            if (largest != index)
-            {
-                //swap index and largest make sure that at index, largest value is present
-                temp = nums[index];
-                nums[index] = nums[largest];
-                nums[largest] = temp;
-
-                MaxHeapify(nums, heapSize, largest);//call Maxheapify again with largest's index which was swapped.
-            }
-
-
+using System.IO;
+class Solution {
+    
+    private static void MaxHeapify(int[] nums, int heapSize, int index) {
+        int indexOfLeftChild = (2 * (index + 1)) - 1;
+        int indexOfRightChild = (2 * (index + 1));
+        int indexOfLargestElement = 0;
+        int temp;
+        
+        if ((indexOfLeftChild < heapSize) && (nums[index] < nums[indexOfLeftChild])) {
+            indexOfLargestElement = indexOfLeftChild;
+        } else {
+            indexOfLargestElement = index;
         }
-
-        static void HeapSort(int[] nums)
-        {
-            int heapSize = nums.Length;
-            int temp;
-
-            for (int index = (heapSize - 1) / 2; index >= 0; index--)
-            {
-                MaxHeapify(nums, heapSize, index);
-            }
-
-            for (int index = nums.Length - 1; index > 0; index--)
-            {
-                temp = nums[index];
-                nums[index] = nums[0];
-                nums[0] = temp;
-
-                heapSize--;
-                MaxHeapify(nums, heapSize, 0);
-            }
-
+        
+        if ((indexOfRightChild < heapSize) && (nums[indexOfLargestElement] < nums[indexOfRightChild])) {
+            indexOfLargestElement = indexOfRightChild;
         }
-
-        static void Main(string[] args)
-        {
+        
+        if (index != indexOfLargestElement){
+            //swap to move the largest element at index
+            temp = nums[indexOfLargestElement];
+            nums[indexOfLargestElement] = nums[index];
+            nums[index] = temp;
+            
+            MaxHeapify(nums, heapSize, indexOfLargestElement);
+        }
+    }
+    
+    private static void HeapSort(int[] nums){
+        int heapSize = nums.Length;
+        int temp;
+        
+        for (int i = (heapSize - 1)/2; i >= 0; i--){
+            MaxHeapify(nums, heapSize, i);
+        }
+        
+        for (int i = nums.Length - 1; i > 0; i--){
+            temp = nums[i];
+            nums[i] = nums[0];
+            nums[0] = temp;
+            
+            heapSize--;
+            MaxHeapify(nums, heapSize, 0);
+        }
+    }
+    
+    static void Main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
+        
             int[] nums = new int[20];
             Random rand = new Random();
 
             for (int index = 0; index < 20; index++)
             {
-                nums[index] = rand.Next(141, 1956);
+                nums[index] = rand.Next(1, 1956);
             }
 
             Console.WriteLine("Before Sorting: ");
@@ -90,6 +73,5 @@ namespace HeapSort
             }
 
             Console.ReadKey();
-        }
     }
 }
