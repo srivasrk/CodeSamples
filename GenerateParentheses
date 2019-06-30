@@ -11,6 +11,8 @@ For example, given n = 3, a solution set is:
 ]
 */
 
+// Time complexity = O(2^n)
+
 public class Solution {
     public IList<string> GenerateParenthesis(int n) {
         var result = new List<string>();
@@ -31,5 +33,33 @@ public class Solution {
         if (close < open) {
             Generate(result, s + ")", open, close + 1, max);
         }        
+    }
+}
+
+// Using string builder
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        List<String> result = new ArrayList();
+        generate(0, 0, result, n, new StringBuilder());
+        return result;
+    }
+
+    private void generate(int open, int close, List<String> result, int max, StringBuilder current) {
+        if (current.length() == (max * 2)) {
+            result.add(current.toString());
+            return;
+        }
+        
+        if (open < max) {
+            current.append("(");
+            generate(open + 1, close, result, max, current);
+            current.setLength(current.length() -1);
+        }
+        
+        if (close < open) {
+            current.append(")");
+            generate(open, close + 1, result, max, current);
+            current.setLength(current.length() -1);
+        }
     }
 }
