@@ -52,27 +52,34 @@ public class Solution {
         int index_of_s = 0;
         int index_of_p = 0;
         
-        while(index_of_s < s.Length) {
+        while(index_of_s < s.Length) {            
             if ((index_of_p < p.Length) && ((s[index_of_s] == p[index_of_p]) || (p[index_of_p] == '?'))) {
+                //s matches p at current index. base case
                 index_of_s++;
                 index_of_p++;
             } else if ((index_of_p < p.Length) && (p[index_of_p] == '*')) {
+                // found a * in p. save index of s because s can match 1 or more chars
                 index_of_match = index_of_s;
                 index_of_star = index_of_p;
                 index_of_p++;
             } else if (index_of_star != -1) {
+                // if above 2 if's dont match and we have found * then s can match more than 1 chars
+                // so consider s matched one more char with * and increment the indexes
                 index_of_p = index_of_star + 1;
                 index_of_match++;
                 index_of_s = index_of_match;
             } else {
+                // nothing matched. return false
                 return false;
             }
         } 
         
         while ((index_of_p < p.Length) && (p[index_of_p] == '*')){
+            // if p ends with * (1 or more) then keep skipping those. * can be considered empty too
             index_of_p++;
         }
         
+        // check if we reached the end of p
         if (index_of_p == p.Length) {
             return true;
         } else {
