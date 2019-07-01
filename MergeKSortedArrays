@@ -26,6 +26,77 @@ Output: 1->1->2->3->4->4->5->6
 // k is the number of lists
 // n is the number of items in the list
 
+// Using merge two sorted arrays logic
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        
+        if (lists == null || lists.length == 0) {
+            return null;
+        }
+        
+        int numberOfLists = lists.length - 1;
+        
+        // Run this while loop until number of lists is 0
+        // The inner loop reduces the number of lists by half
+        while (numberOfLists != 0) {
+            int start = 0;
+            int end = numberOfLists;
+            
+            // After each while loop, only half of the lists remain
+            while (start < end) { 
+                
+                lists[start] = mergeTwoSortedLists(lists[start], lists[end]);
+                start++;
+                end--;
+                
+                if (start >= end) {
+                    numberOfLists = end;
+                }
+                
+            }
+        }
+        
+        return lists[0];
+    }
+    
+    private ListNode mergeTwoSortedLists(ListNode first, ListNode second) {
+        if (first == null) {
+            return second;
+        }
+        
+        if (second == null) {
+            return first;
+        }
+        
+        ListNode result = null;
+        
+        if (first.val < second.val) {
+            result = first;
+            result.next = mergeTwoSortedLists(first.next, second);
+        } else {
+            result = second;
+            result.next = mergeTwoSortedLists(first, second.next);
+        }
+        
+        return result;
+    }
+}
+
+
+// Using priority queue
+
+// O(knlog(n)
+// k is the number of lists
+// n is the number of items in the list
+
 import java.util.Comparator;
 
 class Solution {
