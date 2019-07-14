@@ -87,3 +87,47 @@ public class Solution {
         return 0;
     }
 }
+
+
+//Java solution
+//https://www.youtube.com/watch?v=PeyYhb8lJJU
+class Solution {
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        Set<String> wordSet = new HashSet(wordList);
+        if (!wordSet.contains(endWord)) {
+            return 0;
+        }
+        
+        int result = 0;
+        Queue<String> q = new LinkedList();
+        
+        q.offer(beginWord);
+        while(!q.isEmpty()) {
+            for(int k = q.size() - 1; k >= 0; k--) {
+                String word = q.poll();
+                if (word.equals(endWord)) {
+                    return result + 1;
+                }
+                
+                for(int i = 0; i < word.length(); i++) {
+                    replaceAndMatch(word, i, wordSet, q);
+                }
+            }
+            result++;
+        }
+        return 0;
+    }
+    
+    private void replaceAndMatch(String word, int i, Set<String> wordSet, Queue<String> q) {
+        char[] wordChars = word.toCharArray();
+        for (char c = 'a'; c <= 'z'; c++) {
+            wordChars[i] = c;
+            String oneStepAwayWord = new String(wordChars);
+            if (wordSet.contains(oneStepAwayWord) && !oneStepAwayWord.equals(word)) {
+                q.offer(oneStepAwayWord);
+                wordSet.remove(oneStepAwayWord);
+            }
+        }
+        
+    }
+}
