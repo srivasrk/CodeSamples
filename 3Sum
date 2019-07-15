@@ -85,7 +85,7 @@ public class Solution {
     private void FindTwoSum(int[] nums, int target, int start, IList<IList<int>> res, HashSet<string> collection){
         int left = start;
         int right = nums.Length - 1;
-        int sum, prevLeft, prevRight;
+        int sum;
                   
         while (left < right){
             sum = nums[left] + nums[right];          
