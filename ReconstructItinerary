@@ -1,0 +1,55 @@
+// reconstruct-itinerary
+
+/*
+Given a list of airline tickets represented by pairs of departure and arrival airports [from, to], 
+reconstruct the itinerary in order. All of the tickets belong to a man who departs from JFK. 
+Thus, the itinerary must begin with JFK.
+
+Note:
+
+If there are multiple valid itineraries, you should return the itinerary that has the smallest 
+lexical order when read as a single string. For example, the itinerary ["JFK", "LGA"] has a smaller 
+lexical order than ["JFK", "LGB"].
+All airports are represented by three capital letters (IATA code).
+You may assume all tickets form at least one valid itinerary.
+
+Example 1:
+Input: [["MUC", "LHR"], ["JFK", "MUC"], ["SFO", "SJC"], ["LHR", "SFO"]]
+Output: ["JFK", "MUC", "LHR", "SFO", "SJC"]
+
+Example 2:
+Input: [["JFK","SFO"],["JFK","ATL"],["SFO","ATL"],["ATL","JFK"],["ATL","SFO"]]
+Output: ["JFK","ATL","JFK","SFO","ATL","SFO"]
+Explanation: Another possible reconstruction is ["JFK","SFO","ATL","JFK","ATL","SFO"].
+             But it is larger in lexical order.
+*/
+
+// Time Complexity: O(nlogn)
+// Space: O(n)
+
+class Solution {
+    public List<String> findItinerary(List<List<String>> tickets) {
+        
+        Map<String, Queue<String>> map = new HashMap();
+        LinkedList<String> path = new LinkedList();
+        
+        for (List<String> ticket: tickets) {
+            String source = ticket.get(0);
+            String destination = ticket.get(1);
+            map.putIfAbsent(source, new PriorityQueue());
+            map.get(source).add(destination);
+        }
+        
+        getPathByDFS("JFK", map, path);
+        return path;
+        
+    }
+    
+    private void getPathByDFS(String source, Map<String, Queue<String>> map, LinkedList<String> path) {
+        Queue<String> destinations = map.get(source);
+        while (destinations != null && !destinations.isEmpty()) {
+            getPathByDFS(destinations.poll(), map, path);
+        }
+        path.addFirst(source);
+    }
+}
