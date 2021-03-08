@@ -1,0 +1,68 @@
+/*
+Palindrome Partitioning
+Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.
+
+A palindrome string is a string that reads the same backward as forward.
+
+ 
+
+Example 1:
+
+Input: s = "aab"
+Output: [["a","a","b"],["aa","b"]]
+Example 2:
+
+Input: s = "a"
+Output: [["a"]]
+ 
+
+Constraints:
+
+1 <= s.length <= 16
+s contains only lowercase English letters.
+*/
+
+class Solution {
+    
+    private boolean isPalindrome(String s) {
+        int left = 0;
+        int right = s.length() - 1;
+        
+        while (left <= right) {
+            if (s.charAt(left) != s.charAt(right)) return false;
+            left++;
+            right--;
+        }
+        
+        return true;
+    }
+    
+    private void helper(String s, List<String> current, List<List<String>> result) {
+        if (s == null || s.length() == 0) {
+            result.add(new ArrayList(current));
+            return;
+        }
+        
+        for (int len = 1; len <= s.length(); len++) {
+            String leftPartition = s.substring(0, len);
+            if (isPalindrome(leftPartition)) {
+                current.add(leftPartition);
+                helper(s.substring(len, s.length()), current, result);
+                current.remove(current.size() - 1);                
+            } else 
+                continue;
+        }
+        
+        return;
+    }
+    
+    public List<List<String>> partition(String s) {
+        if (s == null || s.length() == 0) return new ArrayList();
+        
+        List<List<String>> result = new ArrayList();
+        helper(s, new ArrayList(), result);
+        return result;    
+    }
+    
+    
+}
